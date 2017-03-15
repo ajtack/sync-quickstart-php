@@ -9,12 +9,6 @@ $appName = 'TwilioSyncDemo';
 // choose a random username for the connecting user
 $identity = randomUsername();
 
-// A device ID is passed as a query string parameter to this script
-$deviceId = $_GET['device'];
-
-// The endpoint ID is a combination of the above
-$endpointId = $appName . ':' . $identity . ':' . $deviceId;
-
 // Create access token, which we will serialize and send to the client
 $token = new Twilio\Jwt\AccessToken(
     $TWILIO_ACCOUNT_SID, 
@@ -27,7 +21,6 @@ $token = new Twilio\Jwt\AccessToken(
 // Create IP Messaging grant
 $syncGrant = new Twilio\Jwt\Grants\SyncGrant();
 $syncGrant->setServiceSid($TWILIO_SYNC_SERVICE_SID);
-$syncGrant->setEndpointId($endpointId);
 
 // Add grant to token
 $token->addGrant($syncGrant);
